@@ -23,6 +23,7 @@ namespace Movement
 	class MovingBall : SpriteNode
 	{
 		// your private fields here (add Velocity)
+		Vector2 velocity = new Vector2 (300, 100);
 
 
 		// constructor + call base constructor
@@ -30,6 +31,7 @@ namespace Movement
 		{
 			Position = new Vector2(Settings.ScreenSize.X / 2, Settings.ScreenSize.Y / 4);
 			Color = Color.ORANGE;
+
 		}
 
 		// Update is called every frame
@@ -43,7 +45,7 @@ namespace Movement
 		private void Move(float deltaTime)
 		{
 			// TODO implement
-			// Position += Velocity * deltaTime;
+			 Position += velocity * deltaTime;
 		}
 
 		private void BounceEdges()
@@ -54,10 +56,24 @@ namespace Movement
 			float spr_heigth = TextureSize.Y;
 
 			// TODO implement...
-			if (Position.X > scr_width)
+			 if (Position.X > scr_width)
+            {
+				velocity.X = velocity.X * -1;
+            }
+			if (Position.X < 0)
+            {
+				velocity.X = 200;
+            }
+
+
+            if (Position.Y > scr_height)
 			{
-				// ...
+				velocity.Y = velocity.Y * -1;
 			}
+			if (Position.Y < 0)
+            {
+				velocity.Y = 100;
+            }
 		}
 
 	}

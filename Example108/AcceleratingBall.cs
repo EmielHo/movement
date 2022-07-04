@@ -24,6 +24,13 @@ namespace Movement
 	{
 		// your private fields here (add Velocity, Acceleration, and MaxSpeed)
 
+		
+        Vector2 velocity = new Vector2 (0, 0);
+		Vector2 acceleration = new Vector2 (40, 30);
+
+		Vector2 topspeed = new Vector2 (1000,1000);
+
+		
 
 		// constructor + call base constructor
 		public AcceleratingBall() : base("resources/ball.png")
@@ -37,13 +44,19 @@ namespace Movement
 		{
 			Move(deltaTime);
 			WrapEdges();
+			
 		}
 
 		// your own private methods
 		private void Move(float deltaTime)
 		{
 			// TODO implement
-			// Position += Velocity * deltaTime;
+			Position  += velocity * deltaTime;
+			
+			if (velocity.X < topspeed.X)
+			{
+			velocity += acceleration * deltaTime;
+			} 
 
 			// accelerate your ball (40, 30) every frame
 			// limit to a maximum speed of 1000 pixels/second
@@ -59,8 +72,21 @@ namespace Movement
 			// TODO implement...
 			if (Position.X > scr_width)
 			{
-				// ...
-			}
+				Position.X = 0;
+			} 
+			else if (Position.X < 0) 
+			{
+            Position.X = scr_height;
+            }
+
+			if (Position.Y > scr_height)
+			{
+				Position.Y = 0;
+			} 
+			else if (Position.Y < 0) 
+			{
+            Position.Y = scr_height;
+            }
 		}
 
 	}

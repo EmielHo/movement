@@ -24,7 +24,11 @@ namespace Movement
 	class Follower : SpriteNode
 	{
 		// your private fields here (add Velocity, Acceleration, and MaxSpeed)
+        Vector2 velocity = new Vector2 (5, 5);
+		Vector2 acceleration = new Vector2 (0,0);
 
+		Vector2 topspeed = new Vector2 (1000,1000);
+   
 
 		// constructor + call base constructor
 		public Follower() : base("resources/ball.png")
@@ -44,12 +48,16 @@ namespace Movement
 		private void Follow(float deltaTime)
 		{
 			Vector2 mouse = Raylib.GetMousePosition();
+			
 			// Console.WriteLine(mouse);
 			
-			Position = mouse; // incorrect!!
+			
+			
 
 			// TODO implement
-			// Position += Velocity * deltaTime;
+			 Position += velocity * deltaTime;
+			 velocity += acceleration * deltaTime;
+			 acceleration = mouse;
 		}
 
 		private void BounceEdges()
@@ -61,9 +69,23 @@ namespace Movement
 
 			// TODO implement...
 			if (Position.X > scr_width)
+            {
+				velocity.X = velocity.X * -1;
+            }
+			if (Position.X < 0)
+            {
+				velocity.X = 200;
+            }
+
+
+            if (Position.Y > scr_height)
 			{
-				// ...
+				velocity.Y = velocity.Y * -1;
 			}
+			if (Position.Y < 0)
+            {
+				velocity.Y = 100;
+            }
 		}
 
 	}
