@@ -27,6 +27,8 @@ namespace Movement
         Vector2 velocity = new Vector2 (5, 5);
 		Vector2 acceleration = new Vector2 (0,0);
 
+		
+
 		Vector2 topspeed = new Vector2 (1000,1000);
    
 
@@ -48,6 +50,10 @@ namespace Movement
 		private void Follow(float deltaTime)
 		{
 			Vector2 mouse = Raylib.GetMousePosition();
+
+			Vector2 v = mouse - Position; 
+
+			Vector2 nv = Vector2.Normalize(v);
 			
 			// Console.WriteLine(mouse);
 			
@@ -57,7 +63,7 @@ namespace Movement
 			// TODO implement
 			 Position += velocity * deltaTime;
 			 velocity += acceleration * deltaTime;
-			 acceleration = mouse;
+			 acceleration = nv * 1000;
 		}
 
 		private void BounceEdges()

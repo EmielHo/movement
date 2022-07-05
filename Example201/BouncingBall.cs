@@ -24,6 +24,12 @@ namespace Movement
 	{
 		// your private fields here (add Velocity, Acceleration, addForce method)
 
+		Vector2 velocity = new Vector2 (0, 0);
+
+		Vector2 acceleration = new Vector2 (0,0);
+
+
+
 
 		// constructor + call base constructor
 		public BouncingBall() : base("resources/ball.png")
@@ -43,21 +49,17 @@ namespace Movement
 		private void Fall(float deltaTime)
 		{
 			// TODO implement
-			// Position += Velocity * deltaTime;
+			Position += velocity * deltaTime;
 
 			Vector2 wind = new Vector2(150.0f, 0.0f);
 			Vector2 gravity = new Vector2(0.0f, 980.0f);
 
-			AddForce(wind);
-			AddForce(gravity);
+			acceleration = gravity + wind;
+
+			velocity += acceleration * deltaTime;
 		}
 
-		private void AddForce(Vector2 force)
-		{
-			// TODO implement
-		}
-
-		private void BounceEdges()
+    	private void BounceEdges()
 		{
 			float scr_width = Settings.ScreenSize.X;
 			float scr_height = Settings.ScreenSize.Y;
@@ -66,9 +68,23 @@ namespace Movement
 
 			// TODO implement...
 			if (Position.X > scr_width)
+            {
+				velocity.X = velocity.X * -1;
+            }
+			if (Position.X < 0)
+            {
+				velocity.X = 200;
+            }
+
+
+            if (Position.Y > scr_height)
 			{
-				// ...
+				velocity.Y = velocity.Y * -1;
 			}
+			if (Position.Y < 0)
+            {
+				velocity.Y = 100;
+            }
 		}
 
 	}

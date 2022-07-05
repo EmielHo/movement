@@ -24,6 +24,8 @@ namespace Movement
 	class Pointer : SpriteNode
 	{
 		// your private fields here (add Velocity, Acceleration, and MaxSpeed)
+		Vector2 velocity = new Vector2 (5, 5);
+		Vector2 acceleration = new Vector2 (0,0);
 
 
 		// constructor + call base constructor
@@ -48,12 +50,19 @@ namespace Movement
 			Vector2 mouse = Raylib.GetMousePosition();
 			// Console.WriteLine(mouse);
 
-			Position = mouse; // incorrect!!
 
-			Rotation += deltaTime * Math.PI;  // incorrect!!
+			Vector2 v = mouse - Position; 
+
+			Vector2 nv = Vector2.Normalize(v);
+
+			Rotation += deltaTime * Math.PI;  // correct!!
 
 			// TODO implement
 			// Position += Velocity * deltaTime;
+			 Position += velocity * deltaTime;
+			 velocity += acceleration * deltaTime;
+			 acceleration = nv * 1000;
+			 Rotation = Math.Atan2(velocity.Y, velocity.X);
 		}
 
 		private void BounceEdges()

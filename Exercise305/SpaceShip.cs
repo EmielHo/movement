@@ -25,16 +25,18 @@ namespace Movement
 	{
 		// your private fields here (rotSpeed, thrustForce)
 		private float rotSpeed;
-		// private float thrustForce;
+		private float thrustForce;
+		Vector2 velocity = new Vector2 (0, 0);
+		Vector2 acceleration = new Vector2 (40, 30);
 
 		// constructor + call base constructor
 		public SpaceShip() : base("resources/spaceship.png")
 		{
 			rotSpeed = (float)Math.PI; // rad/second
-			// thrustForce = 500;
+		    thrustForce = 500;
 
 			Position = new Vector2(Settings.ScreenSize.X / 2, Settings.ScreenSize.Y / 2);
-			Color = Color.YELLOW;
+			Color = Color.PURPLE;
 		}
 
 		// Update is called every frame
@@ -48,7 +50,12 @@ namespace Movement
 		private void Move(float deltaTime)
 		{
 			// TODO implement
-			// Position += Velocity * deltaTime;
+			Position += velocity * deltaTime;
+			
+			
+
+			
+			
 		}
 
 		private void WrapEdges()
@@ -61,8 +68,21 @@ namespace Movement
 			// TODO implement...
 			if (Position.X > scr_width)
 			{
-				// ...
-			}
+				Position.X = 0;
+			} 
+			else if (Position.X < 0) 
+			{
+            Position.X = scr_height;
+            }
+
+			if (Position.Y > scr_height)
+			{
+				Position.Y = 0;
+			} 
+			else if (Position.Y < 0) 
+			{
+            Position.Y = scr_height;
+            }
 		}
 
 		public void RotateRight(float deltaTime)
@@ -78,13 +98,13 @@ namespace Movement
 		public void Thrust()
 		{
 			// TODO implement
-			Color = Color.ORANGE;
-			// use thrustForce somewhere here
+			Color = Color.RED;
+			
 		}
 
 		public void NoThrust()
 		{
-			Color = Color.YELLOW;
+			Color = Color.PURPLE;
 		}
 
 	}
